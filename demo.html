@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新闻盖楼评论效果 --  by SM</title>
+
+<!---
+	author:SM
+    e-mail:sm0210@qq.com
+    desc:新闻盖楼评论效果 --  by SM
+-->
+<style type="text/css">
+*{font-size:13px;}
+#box{
+	width:970px;
+	margin:0 auto;
+}
+
+/*评论*/
+.box_pl{
+	border:1px solid #999999; 
+	padding:3px;
+	margin:3px;
+	background:#FFFFEE;
+	overflow:hidden;
+	line-height:22px;
+}
+/*序号*/
+.box_pl_span{
+	display:block;
+	float:right;
+	width:200px;
+	text-align:right;
+	padding-right:5px;
+}
+</style>
+<script language="javascript">
+	//记录长度
+	var arrLength=10;
+	//显示评论
+	function showPl(){	
+		var htmlstr=dgInfo(0);		
+		//console.log(htmlstr);		
+		document.getElementById("box").innerHTML=htmlstr;
+	}
+	
+	//递归所有记录
+	function dgInfo(objnum){
+		//序号
+		var numXH=arrLength-objnum+1;
+		var htmlstr='';	
+		var info='网友(#id#)的原贴：';
+		info=info.replace("#id#",numXH)+' 我只是在测试评论信息...';
+		var floors='<span class="box_pl_span">'+numXH+'<span>';	
+		var className='class="box_pl"';
+		
+		//最后
+		if(objnum==arrLength){
+				htmlstr+='<div class="box_pl" id='+objnum+'>'+info;
+				htmlstr+=floors;
+		}//不是最后
+		else{
+			for(var i=0;i<arrLength;i++){
+				if(i==objnum){
+					if(i==0){
+						className='';
+						floors='';
+						info=info+"over...."
+					}
+					htmlstr+='<div '+className+' id='+(i)+'>'+dgInfo(i+1)+' '+info;
+					htmlstr+=floors;
+				}
+			}
+		}
+		
+		htmlstr+='</div>';
+		return htmlstr;
+	}
+	
+	//页面加载完执行
+	window.onload=showPl;
+
+</script>
+</head>
+
+<body>
+<br>
+<br>
+<h1 style="text-align:center;font-size:22px;">新闻盖楼评论效果 --  by SM</h1>
+
+<!--盖楼评论-->
+<div id="box"></div>
+<!--盖楼评论-->
+</body>
+</html>
